@@ -12,7 +12,7 @@ In `app/const.py` change `sferg` in the expression `if 'sferg' in os.path.expand
 
 Start the app: `python index.py`
 
-If you haven't prepared the UMAP model, follow the directions in the "Changing the UMAP Model" section.
+If you haven't prepared the UMAP model, follow the directions [here](https://github.com/sfergusond/lfc-model-pipeline#readme).
 
 View the app at `localhost:8050`
 
