@@ -1,0 +1,79 @@
+import plotly.graph_objects as go
+
+from .traces_by_competition import create_node_traces_by_competition
+from .traces_by_topic import create_node_traces_by_topic, create_topic_label_trace
+from .traces_by_selected_proposal import create_selected_proposal_traces
+
+def createLandscape(**kwargs):
+  """ Create the landscape graph, by default it creates one trace per competition with no highlighting """
+  traces = []
+  selected_proposal = kwargs.get('selected_proposal')
+  view_type = kwargs.get('view_type', 'View by Topic')
+
+  if selected_proposal:
+    opacity = 0.5
+    if view_type == 'View by Topic':
+      traces.extend(
+        create_selected_proposal_traces(selected_proposal, by='topic')
+      )
+    else:
+      traces.extend(
+        create_selected_proposal_traces(selected_proposal, by='competition')
+      )
+  else:
+    opacity = 0.65
+
+  if view_type == 'View by Topic':
+    traces.extend(
+      create_node_traces_by_topic(opacity=opacity)
+    )
+  else:
+    traces.extend(
+      create_node_traces_by_competition(opacity=opacity)
+    )
+
+  traces.append(create_topic_label_trace())
+
+  layout = go.Layout(
+    showlegend=True,
+    clickmode='select',
+    margin=dict(l=0, r=0, t=0, b=0),
+    legend=dict(
+      bgcolor='rgba(0,0,0,0)',
+      orientation='v',
+      x=0.01, y=1,
+      font=dict(
+        color='#ccc',
+        size=12
+        ),
+      title=dict(
+        text='Click to toggle:'
+        ),
+      itemwidth=30,
+      itemsizing='constant'
+      ),
+    modebar=dict(
+      remove='resetCameraLastSave3d',
+      orientation='v',
+    ),
+    scene=dict(
+      bgcolor='#111',
+      xaxis_visible=False, 
+      yaxis_visible=False,
+      zaxis_visible=False,
+      camera=dict(
+        eye=kwargs.get('eye', dict(x=1, y=1, z=1))
+        )
+      )
+    )
+
+  fig = go.Figure(
+    data=[*traces],
+    layout=layout
+    )
+  
+  return fig
+
+if __name__ == '__main__':
+  fig = createLandscape()
+  fig.show()

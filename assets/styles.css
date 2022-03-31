@@ -1,0 +1,84 @@
+body {
+  background-color: #111;
+  color: #dedede;
+  font-family: sans-serif;
+  margin: 0px;
+  overflow: hidden;
+}
+
+.dropdown {
+  color: black;
+  margin-top: 0.5rem;
+}
+
+.sidebar-container {
+  width: 20%;
+  margin-left: 0.25rem;
+}
+
+.proposal-data-container {
+  overflow: scroll;
+  max-height: 90vh;
+}
+
+.graph-container {
+  width: 80%;
+}
+
+.container {
+  height: 98vh;
+  width: 100%;
+  display: flex;
+  margin: 0;
+}
+
+.source-card {
+  background-color: #1d1d1d;
+  border-radius: 0.5rem;
+  white-space: normal;
+  padding: 1rem;
+  margin-top: 1rem;
+  border: 1.5px solid #aaa;
+}
+.source-card a {
+  text-decoration: none;
+  color: inherit;
+}
+.source-card a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+.source-card a:focus {
+  text-decoration: none;
+  color: inherit;
+}
+
+.neighbor-card {
+  background-color: #1f1f1f;
+  border-radius: 0.5rem;
+  white-space: normal;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+.neighbor-card a {
+  text-decoration: none;
+  color: inherit;
+}
+.neighbor-card a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+.neighbor-card a:focus {
+  text-decoration: none;
+  color: inherit;
+}
+
+.sidebar-divider {
+  text-align: center;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 0px;
+  border-bottom: 1px solid #aaa;
+}
