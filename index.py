@@ -25,8 +25,47 @@ def update_camera_data(*args):
   return callbacks.update_camera_data(*args)
 
 @app.callback(
+  Output('select-proposal', 'style'),
+  Input('search-control', 'value')
+)
+def toggle_select_competition(value):
+  return callbacks.toggle_select_proposal(value)
+
+@app.callback(
+  Output('select-competition', 'style'),
+  Input('search-control', 'value')
+)
+def toggle_select_competition(value):
+  return callbacks.toggle_search_controls(value, 'select-competition')
+
+@app.callback(
+  Output('select-topic', 'style'),
+  Input('search-control', 'value')
+)
+def toggle_select_competition(value):
+  return callbacks.toggle_search_controls(value, 'select-topic')
+
+@app.callback(
+  Output('document-search', 'style'),
+  Input('search-control', 'value')
+)
+def toggle_document_search(value):
+  return callbacks.toggle_search_controls(value, 'document-search')
+
+@app.callback(
+  Output('location-search', 'style'),
+  Input('search-control', 'value')
+)
+def toggle_document_search(value):
+  return callbacks.toggle_search_controls(value, 'location-search')
+
+@app.callback(
   Output('select-proposal', 'options'),
-  Input('select-competition', 'value')
+  Output('select-proposal', 'disabled'),
+  Input('select-competition', 'value'),
+  Input('select-topic', 'value'),
+  Input('document-search', 'value'),
+  Input('location-search', 'value')
   )
 def update_select_proposal_dropdown(*args):
   return callbacks.update_select_proposal_dropdown(*args)

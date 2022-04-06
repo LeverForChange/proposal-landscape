@@ -1,5 +1,6 @@
 import json
 import dash
+import pandas as pd
 
 from dash import html
 
@@ -14,10 +15,54 @@ def update_camera_data(data):
   else:
     return dash.no_update
 
-def update_select_proposal_dropdown(value):
+def toggle_select_proposal(value):
+  if value:
+    return {'font-size': '12px'}
+  else:
+    return {'font-size': '12px', 'display': 'none'}
+
+def toggle_search_controls(*args):
+  if args[0] == args[1]:
+    return {}
+  else:
+    return {'display': 'none'}
+
+def update_select_proposal_dropdown(*args):
   """ Updates the proposal selector with a list of the given competition's proposals """
-  rows = df[df['Competition Domain'] == value].sort_values('Project Title')
-  return rows['Project Title']
+  ctx = dash.callback_context
+  input_ = ctx.triggered[0]['prop_id']
+
+  if 'select-competition' in input_:
+    rows = df[df['Competition Domain'] == args[0]].sort_values('Project Title')
+    return rows['Project Title'], False
+
+  elif 'select-topic' in input_:
+    rows = df[df['Topic'] == args[1]].sort_values('Project Title')
+    return rows['Project Title'], False
+
+  elif 'document-search' in input_:
+    tokens = args[2].split(' ')
+    results = [df[df['Document Sanitized'].str.contains(tok, case=False)] for tok in tokens]
+    if len(results) == 1:
+      rows = results[0]
+    else:
+      rows = pd.merge(*results)
+    rows.sort_values('Project Title', inplace=True)
+    return rows['Project Title'], False
+
+  elif 'location-search' in input_:
+    tokens = args[3].split(' ')
+    location_cols = list(df.filter(regex='Future Work #[1-5] Location').columns)
+    results = []
+    for col in location_cols:
+      for tok in tokens:
+        results.append(df[df[col].str.contains(tok, case=False, na=False)])
+    if len(results) == 1:
+      rows = results[0]
+    else:
+      rows = pd.merge(*results)
+    rows.sort_values('Project Title', inplace=True)
+    return rows['Project Title'], False
 
 def update_graph(project_title, click_data, view_type, view_type_state, camera_data):
   """ 
