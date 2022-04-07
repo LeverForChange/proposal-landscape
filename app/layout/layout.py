@@ -11,6 +11,22 @@ LAYOUT = html.Div(children=[
     # Sidebar
     html.Div(children=[
 
+      # Title/links
+      html.Div(children=[
+        html.H3('Lever for Change Proposal Landscape'),
+        html.A(
+          'Leave Feedback', 
+          href='https://docs.google.com/document/d/1SvPGF_vcBuYObYy0HjORnxPz5V1kDgSJtrchQCICyZs/edit?usp=sharing', 
+          target='_blank', 
+          className='button'
+          )
+        ],
+        className='center',
+        style={
+          'margin-bottom': '1rem'
+        }
+      ),
+
       # Selector/Group By area
       html.Div(children=[
         

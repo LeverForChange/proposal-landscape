@@ -6,6 +6,11 @@ body {
   overflow: hidden;
 }
 
+.center {
+  display: grid;
+  justify-content: center;
+}
+
 .dropdown {
   color: black;
   margin-top: 0.5rem;
@@ -20,7 +25,7 @@ body {
 }
 
 .sidebar-container {
-  width: 20%;
+  width: 22.5%;
   margin-left: 0.25rem;
 }
 
@@ -30,7 +35,7 @@ body {
 }
 
 .graph-container {
-  width: 80%;
+  width: 77.5%;
 }
 
 .container {
@@ -95,18 +100,43 @@ body {
   width: 100%;
 }
 .custom-tabs {
-  background-color: #111;
+  border-top-right-radius: 2rem !important;
+  margin: 2px !important;
 }
 
 .custom-tab {
   color:white;
-  background-color: black !important;
+  background-color: transparent !important;
   padding: .5rem !important;
   display: flex !important;
   align-items: center;
   justify-content: center;
+  border-top-right-radius: 0.5rem;
+  border-top-left-radius: 0.5rem;
+  border: none !important;
+  background-color: #2f363d !important;
 }
 .custom-tab--selected {
   color: white !important;
-  background-color: black;
+  background-color: black !important;
+  border-left: 2px solid #2186f4 !important;
+  border-right: 2px solid #2186f4 !important;
+  border-top: 2px solid #2186f4 !important;
+}
+
+.button {
+  color: #2186f4;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #2186f4;
+  border-radius: 10px;
+  padding: 0.5rem;
+  background-color: #0e1012;
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+}
+.button:hover{
+  background-color: #2f363d;
 }
