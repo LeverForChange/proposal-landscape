@@ -106,18 +106,42 @@ LAYOUT = html.Div(children=[
                     }
                   ),
               ]),
+          
+          # Graph options tab
           dcc.Tab(
             label='Graph Options',
             className='custom-tab',
             selected_className='custom-tab--selected',
             children=[
+              html.Div(children=[
+                html.B(
+                'Highlight:',
+                style={'width': '20%'}
+                ),
+              ],
+                className='row center',
+                style={'margin-top': '0.5rem', 'margin-bottom': '0.5rem'}
+              ),
               dcc.RadioItems(
-                ['View by Competition', 'View by Topic'],
-                'View by Topic',
+                options=['Topics', 'Competitions', 'Outliers'],
+                value='Topics',
                 id='graph-view-select',
-                inline=True
+                inline=True,
+                className='row between',
+                style={'margin-bottom': '1rem'}
+              ),
+              dcc.Slider(
+                0, 1, 0.05,
+                marks={
+                  0: {'label': 'Less Unique', 'style': {'width': 'min-content', 'color': 'white'}},
+                  1: {'label': 'More Unique', 'style': {'width': 'min-content', 'color': 'white'}},
+                  },
+                value=0.6,
+                className='hide',
+                id='outlier-threshold'
               )
-            ]),
+              ],
+            )
         ]),
       ]),
   

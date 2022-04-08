@@ -2,6 +2,7 @@ import plotly.graph_objects as go
 
 from .traces_by_competition import create_node_traces_by_competition
 from .traces_by_topic import create_node_traces_by_topic
+from .traces_by_outlier_score import create_node_traces_by_outlier_score
 from ..const import embeddings, df, knn_indices
 
 def create_edge_trace(source, indices):
@@ -64,14 +65,18 @@ def create_selected_proposal_traces(selected_proposal, by='competition'):
   traces.append(source_trace)
 
   neighbors = df.iloc[knn_indices[index]].iloc[1:]
-  if by == 'competition':
+  if by == 'Competitions':
     traces.extend(
       create_node_traces_by_competition(data=neighbors, opacity=0.9, line=line, showlegend=False)
       )
-  elif by == 'topic':
+  elif by == 'Topics':
     traces.extend(
       create_node_traces_by_topic(data=neighbors, opacity=0.9, line=line, showlegend=False)
       )
+  elif by == 'Outliers':
+    traces.extend(
+      create_node_traces_by_outlier_score(data=neighbors, opacity=0.9, line=line, showlegend=False)
+    )
   traces.append(
     create_edge_trace(source, knn_indices[index])
     )

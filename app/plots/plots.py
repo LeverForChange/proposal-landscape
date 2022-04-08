@@ -3,33 +3,33 @@ import plotly.graph_objects as go
 from .traces_by_competition import create_node_traces_by_competition
 from .traces_by_topic import create_node_traces_by_topic, create_topic_label_trace
 from .traces_by_selected_proposal import create_selected_proposal_traces
+from .traces_by_outlier_score import create_node_traces_by_outlier_score
 
 def createLandscape(**kwargs):
   """ Create the landscape graph, by default it creates one trace per competition with no highlighting """
   traces = []
   selected_proposal = kwargs.get('selected_proposal')
-  view_type = kwargs.get('view_type', 'View by Topic')
+  view_type = kwargs.get('view_type', 'Topics')
 
   if selected_proposal:
     opacity = 0.5
-    if view_type == 'View by Topic':
-      traces.extend(
-        create_selected_proposal_traces(selected_proposal, by='topic')
-      )
-    else:
-      traces.extend(
-        create_selected_proposal_traces(selected_proposal, by='competition')
-      )
+    traces.extend(
+      create_selected_proposal_traces(selected_proposal, by=view_type)
+    )
   else:
     opacity = 0.65
 
-  if view_type == 'View by Topic':
+  if view_type == 'Topics':
     traces.extend(
       create_node_traces_by_topic(opacity=opacity)
     )
-  else:
+  elif view_type == 'Competitions':
     traces.extend(
       create_node_traces_by_competition(opacity=opacity)
+    )
+  elif view_type == 'Outliers':
+     traces.extend(
+      create_node_traces_by_outlier_score(opacity=opacity, **kwargs)
     )
 
   traces.append(create_topic_label_trace())
