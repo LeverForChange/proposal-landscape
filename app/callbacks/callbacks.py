@@ -81,11 +81,11 @@ def update_graph(project_title, click_data, view_type, outlier_threshold, view_t
   input_ = ctx.triggered[0]['prop_id']
 
   if 'select-proposal' in input_ and project_title:
-    fig = createLandscape(selected_proposal=project_title, eye=eye, view_type=view_type_state)
+    fig = createLandscape(selected_proposal=project_title, eye=eye, view_type=view_type_state, outlier_threshold=outlier_threshold)
 
   elif 'clickData' in input_ and click_data:
     index = click_data['points'][0]['customdata']
-    fig = createLandscape(selected_proposal=index, eye=eye, view_type=view_type_state)
+    fig = createLandscape(selected_proposal=index, eye=eye, view_type=view_type_state, outlier_threshold=outlier_threshold)
 
   elif 'graph-view-select' in input_ and view_type:
     fig = createLandscape(eye=eye, view_type=view_type, outlier_threshold=outlier_threshold)
@@ -120,12 +120,12 @@ def display_proposal_neighbors(click_data, project_title):
   nodes.append(source_card(source))
 
   neighbors = knn_indices[index]
-  num_neighbors = len(neighbors) - 1
+  num_neighbors = len(neighbors)
   if num_neighbors:
 
     nodes.append(sidebar_divider(num_neighbors))
 
-    neighbors = df.iloc[neighbors[1:]]
+    neighbors = df.iloc[neighbors]
     neighbors = neighbors.to_dict(orient='records')
     for proposal in neighbors:
       nodes.append(neighbor_card(proposal))
