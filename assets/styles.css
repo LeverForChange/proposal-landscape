@@ -6,14 +6,28 @@ body {
   overflow: hidden;
 }
 
+.hide {
+  display: none;
+}
+
 .center {
   display: grid;
   justify-content: center;
 }
 
+.between {
+  justify-content: space-between;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .dropdown {
   color: black;
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
+  font-size: 12px;
 }
 
 .input {
@@ -26,12 +40,13 @@ body {
 
 .sidebar-container {
   width: 22.5%;
+  height: 105%;
   margin-left: 0.25rem;
+  overflow: scroll;
 }
 
 .proposal-data-container {
   overflow: scroll;
-  max-height: 90vh;
 }
 
 .graph-container {
@@ -136,7 +151,13 @@ body {
   display: flex;
   justify-content: center;
   text-decoration: none;
+  cursor: pointer;  
 }
 .button:hover{
   background-color: #2f363d;
+}
+.button:active{
+  background-color: #2f363d;
+  border-color: white;
+  font-weight: bold;
 }

@@ -27,6 +27,11 @@ def toggle_search_controls(*args):
   else:
     return {'display': 'none'}
 
+def toggle_outlier_threshold(value):
+  if value == 'Outliers':
+    return ''
+  return 'hide'
+
 def update_select_proposal_dropdown(*args):
   """ Updates the proposal selector with a list of the given competition's proposals """
   ctx = dash.callback_context
@@ -64,7 +69,7 @@ def update_select_proposal_dropdown(*args):
     rows.sort_values('Project Title', inplace=True)
     return rows['Project Title'], False
 
-def update_graph(project_title, click_data, view_type, view_type_state, camera_data):
+def update_graph(project_title, click_data, view_type, outlier_threshold, view_type_state, camera_data):
   """ 
   Redraws the main graph 
   """
@@ -83,7 +88,10 @@ def update_graph(project_title, click_data, view_type, view_type_state, camera_d
     fig = createLandscape(selected_proposal=index, eye=eye, view_type=view_type_state)
 
   elif 'graph-view-select' in input_ and view_type:
-    fig = createLandscape(eye=eye, view_type=view_type)
+    fig = createLandscape(eye=eye, view_type=view_type, outlier_threshold=outlier_threshold)
+
+  elif 'outlier-threshold' in input_ and view_type:
+    fig = createLandscape(eye=eye, view_type=view_type_state, outlier_threshold=outlier_threshold)
 
   else:
     fig = createLandscape(eye=eye)

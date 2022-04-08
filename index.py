@@ -60,6 +60,13 @@ def toggle_document_search(value):
   return callbacks.toggle_search_controls(value, 'location-search')
 
 @app.callback(
+  Output('outlier-threshold', 'className'),
+  Input('graph-view-select', 'value')
+)
+def toggle_outlier_threshold(value):
+  return callbacks.toggle_outlier_threshold(value)
+
+@app.callback(
   Output('select-proposal', 'options'),
   Output('select-proposal', 'disabled'),
   Input('select-competition', 'value'),
@@ -75,6 +82,7 @@ def update_select_proposal_dropdown(*args):
   Input('select-proposal', 'value'),
   Input('landscape-graph', 'clickData'),
   Input('graph-view-select', 'value'),
+  Input('outlier-threshold', 'value'),
   State('graph-view-select', 'value'),
   State('camera-data', 'data'),
   )
