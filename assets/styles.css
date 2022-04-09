@@ -161,3 +161,26 @@ body {
   border-color: white;
   font-weight: bold;
 }
+
+._dash-loading {
+  margin: auto;
+  color: transparent;
+  width: 0;
+  height: 0;
+  text-align: center;
+}
+
+._dash-loading::after {
+  content: '';
+  display: inline-block;
+  width: 5rem;
+  height: 5rem;
+  color: white;
+  vertical-align: text-bottom;
+  border: 0.25em solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  -webkit-animation: spinner-border 0.25s linear infinite;
+  animation: spinner-border 0.25s linear infinite;
+  margin-top: 10rem;
+}

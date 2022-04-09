@@ -96,6 +96,6 @@ def update_graph(*args):
   )
 def display_proposal_neighbors(*args):
   return callbacks.display_proposal_neighbors(*args)
-
+  
 if __name__ == '__main__':
     app.run_server(debug=True)

@@ -158,7 +158,6 @@ LAYOUT = html.Div(children=[
       className='sidebar-container'
     ),
 
-    # Graph
     dcc.Graph(
       id='landscape-graph',
       figure=createLandscape(),
@@ -167,8 +166,11 @@ LAYOUT = html.Div(children=[
         'displayModeBar': True,
         'doubleClick': 'reset'
       },
-      className='graph-container'
-    ),
+      className='graph-container',
+      loading_state={
+        'component_name': 'graph-loader'
+      }
+    )
   ],
   className='container'
   ),
