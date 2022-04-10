@@ -105,6 +105,14 @@ LAYOUT = html.Div(children=[
                     'display': 'none'
                     }
                   ),
+
+                # Download .xlsx
+                html.Div(
+                  className='center', 
+                  style={'margin-top': '1rem'}, 
+                  children=[
+                    html.Button('Download to Excel', id='download-btn', className='button hide')
+                ])
               ]),
           
           # Graph options tab
@@ -175,6 +183,8 @@ LAYOUT = html.Div(children=[
   className='container'
   ),
 
-  dcc.Store(id='camera-data')
+  dcc.Store(id='camera-data'),
+  dcc.Store(id='selected-proposal'),
+  dcc.Download(id='download-dataframe')
   ],           
 )
