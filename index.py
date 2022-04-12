@@ -91,11 +91,27 @@ def update_graph(*args):
 
 @app.callback(
   Output('click-data', 'children'), 
+  Output('selected-proposal', 'data'),
   Input('landscape-graph', 'clickData'),
   Input('select-proposal', 'value'),
   )
-def display_proposal_neighbors(*args):
-  return callbacks.display_proposal_neighbors(*args)
+def update_selected_proposal(*args):
+  return callbacks.update_selected_proposal(*args)
+
+@app.callback(
+  Output('download-dataframe', 'data'),
+  Input('download-btn', 'n_clicks'),
+  State('selected-proposal', 'data')
+)
+def download_dataframe(clicks, index):
+  return callbacks.download_dataframe(clicks, index)
+
+@app.callback(
+  Output('download-btn', 'className'),
+  Input('selected-proposal', 'data')
+)
+def show_download_button(index):
+  return callbacks.show_download_button(index)
   
 if __name__ == '__main__':
     app.run_server(debug=True)

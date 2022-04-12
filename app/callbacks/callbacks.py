@@ -2,7 +2,7 @@ import json
 import dash
 import pandas as pd
 
-from dash import html
+from dash import html, dcc
 
 from ..const import df, knn_indices
 from ..plots.plots import createLandscape
@@ -37,13 +37,14 @@ def update_select_proposal_dropdown(*args):
   ctx = dash.callback_context
   input_ = ctx.triggered[0]['prop_id']
 
+  def to_label_value(rows):
+    return [{'label': row['Project Title'], 'value': i} for i, row in rows.iterrows()]
+
   if 'select-competition' in input_:
     rows = df[df['Competition Domain'] == args[0]].sort_values('Project Title')
-    return rows['Project Title'], False
 
   elif 'select-topic' in input_:
     rows = df[df['Topic'] == args[1]].sort_values('Project Title')
-    return rows['Project Title'], False
 
   elif 'document-search' in input_:
     tokens = args[2].split(' ')
@@ -53,7 +54,6 @@ def update_select_proposal_dropdown(*args):
     else:
       rows = pd.merge(*results)
     rows.sort_values('Project Title', inplace=True)
-    return rows['Project Title'], False
 
   elif 'location-search' in input_:
     tokens = args[3].split(' ')
@@ -67,7 +67,9 @@ def update_select_proposal_dropdown(*args):
     else:
       rows = pd.merge(*results)
     rows.sort_values('Project Title', inplace=True)
-    return rows['Project Title'], False
+
+  options = to_label_value(rows)
+  return options, False
 
 def update_graph(project_title, click_data, view_type, outlier_threshold, view_type_state, camera_data):
   """ 
@@ -98,7 +100,7 @@ def update_graph(project_title, click_data, view_type, outlier_threshold, view_t
 
   return fig
 
-def display_proposal_neighbors(click_data, project_title):
+def update_selected_proposal(click_data, project_index):
   """ Updates the sidebar with info on the selected proposal and its neighbors, if any """
   # Determine which component triggered the callback
   ctx = dash.callback_context
@@ -106,15 +108,16 @@ def display_proposal_neighbors(click_data, project_title):
 
   if 'clickData' in input_ and click_data:
     index = click_data['points'][0]['customdata']
-    source = df.iloc[index]
-    source = source.to_dict()
-  elif 'select-proposal' in input_ and project_title:
-    source = df[df['Project Title'] == project_title]
-    index = int(list(source.index)[0])
-    source = source.iloc[0].to_dict()
+
+  elif 'select-proposal' in input_ and project_index:
+    index = project_index
+    
   else:
     # Clear sidebar if the dropdown is cleared
-    return None
+    return None, None
+
+  source = df.iloc[index]
+  source = source.to_dict()
 
   nodes = []
   nodes.append(source_card(source))
@@ -130,4 +133,25 @@ def display_proposal_neighbors(click_data, project_title):
     for proposal in neighbors:
       nodes.append(neighbor_card(proposal))
 
-  return html.Div(nodes)
+  return html.Div(nodes), index
+
+def download_dataframe(*args):
+  index = args[1]
+  neighbors = knn_indices[index]
+  indices = [index] + neighbors
+  cols = ['Project Title', 'Organization Name', 'Competition Domain', 'Document Sanitized', 'GlobalView MediaWiki Title']
+
+  download_df = df.iloc[indices, :]
+  download_df = download_df[cols]
+
+  download_df['URL'] = download_df['GlobalView MediaWiki Title'].apply(lambda x: f"https://torque.leverforchange.org/GlobalView/index.php/{x}")
+  download_df.rename({'Document Sanitized': 'Executive Summary'}, inplace=True)
+  download_df.drop(columns=['GlobalView MediaWiki Title'], inplace=True)
+
+  return dcc.send_data_frame(download_df.to_excel, 'LFC Landscape.xlsx', sheet_name='Main', index=False)
+
+def show_download_button(index):
+  if index:
+    return 'button'
+  else:
+    return 'button hide'
