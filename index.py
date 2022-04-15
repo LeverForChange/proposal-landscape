@@ -112,6 +112,14 @@ def download_dataframe(clicks, index):
 )
 def show_download_button(index):
   return callbacks.show_download_button(index)
+
+@app.callback(
+  Output('welcome-modal', 'style'),
+  Input('close-welcome-modal', 'n_clicks'),
+  Input('open-welcome-modal', 'n_clicks')
+)
+def toggle_welcome_modal(*args):
+  return callbacks.toggle_welcome_modal(*args)
   
 if __name__ == '__main__':
     app.run_server(debug=True)

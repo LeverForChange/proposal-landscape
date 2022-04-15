@@ -5,6 +5,29 @@ from ..plots.plots import createLandscape
 
 LAYOUT = html.Div(children=[
 
+  # Welcome modal
+  html.Div(
+    className='modal',
+    style={'display': 'block'},
+    id='welcome-modal',
+    children=[
+      html.Div(
+        className='modal-content',
+        children=[
+          html.H1(className='center', children='Welcome to the Lever For Change Proposal Landscape!'),
+          html.H4(className='center', children=html.Span([
+            'Please consider leaving feedback or a note about how you used this tool ',
+            html.A('here.', href='https://docs.google.com/document/d/1SvPGF_vcBuYObYy0HjORnxPz5V1kDgSJtrchQCICyZs/edit?usp=sharing', target='_blank')
+            ]),
+          ),
+          html.Div(className='row center', children=html.Button(
+            id='close-welcome-modal', className='button', children='Close')
+          ),
+        ]
+      )
+    ]
+  ),
+
   # Main container
   html.Div(children=[
 
@@ -14,12 +37,15 @@ LAYOUT = html.Div(children=[
       # Title/links
       html.Div(children=[
         html.H3('Lever for Change Proposal Landscape'),
-        html.A(
-          'Leave Feedback', 
-          href='https://docs.google.com/document/d/1SvPGF_vcBuYObYy0HjORnxPz5V1kDgSJtrchQCICyZs/edit?usp=sharing', 
-          target='_blank', 
-          className='button'
-          )
+        html.Div(className='row around', children=[
+          html.A(
+            'Leave Feedback', 
+            href='https://docs.google.com/document/d/1SvPGF_vcBuYObYy0HjORnxPz5V1kDgSJtrchQCICyZs/edit?usp=sharing', 
+            target='_blank', 
+            className='button'
+          ),
+          html.A(id='open-welcome-modal', className='button', children='View Instructions')
+          ])
         ],
         className='center',
         style={
