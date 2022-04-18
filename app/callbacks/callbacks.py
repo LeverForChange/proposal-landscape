@@ -32,6 +32,13 @@ def toggle_outlier_threshold(value):
     return ''
   return 'hide'
 
+def toggle_welcome_modal(*args):
+  ctx = dash.callback_context
+  input_ = ctx.triggered[0]['prop_id']
+  if 'close' in input_:
+    return {'display': 'none'}
+  return {'display': 'block'}
+
 def update_select_proposal_dropdown(*args):
   """ Updates the proposal selector with a list of the given competition's proposals """
   ctx = dash.callback_context
