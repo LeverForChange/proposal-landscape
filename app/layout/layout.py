@@ -20,6 +20,11 @@ LAYOUT = html.Div(children=[
             html.A('here.', href='https://docs.google.com/document/d/1SvPGF_vcBuYObYy0HjORnxPz5V1kDgSJtrchQCICyZs/edit?usp=sharing', target='_blank')
             ]),
           ),
+          html.P('1) Nearly everything in the interface is clickable. Click + drag to rotate the graph, and scroll to zoom in/out. Click/double click on legend items, under "Click to toggle:" to show/hide items on the graph. Click directly on points to view more detailed information about them. Click on proposal info cards to view their page on GlobalView.'),
+          html.P('2) By default, the graph is colored by Topic. Note that topics displayed are different from Primary Subject Area. The topics you see are generated via machine learning analysis of the dataset.'),
+          html.P('3) To change how the graph is colored, click the "Graph Options" tab on the left, and choose one fo the other highlight options. Choosing "Outliers" will also allow you to specify the threshold at which a proposal is considered an outlier.'),
+          html.P('4) Use the "Proposal Search" tab to find a specific propoal & its similar proposals. You can also click directly on points in the graph to do so!'),
+          html.P('5) When using the "Proposal Search" tab, first choose a metric to search by (Competition, Text, Topic, or Geography). Then enter your search terms or choose from the resulting dropdown selection. Finally, a list of proposals will be returned in the final dropdown. Choosing a proposal from the final dropdown will highlight the point in the graph and display more detailed information about it and its neighbors in the sidebar.'),
           html.Div(className='row center', children=html.Button(
             id='close-welcome-modal', className='button', children='Close')
           ),
