@@ -48,7 +48,8 @@ COMPETITION_COLORS = {
   'LLIIA2020': '#ffff00',
   'LSP2020': '#666565',
   'RE2020': '#ff0000',
-  'SDA2021': '#00e6f2'
+  'SDA2021': '#00e6f2',
+  'BaWoP22': '#a88532'
   }
 
 COMPETITION_NAMES = {
@@ -60,7 +61,8 @@ COMPETITION_NAMES = {
   'LLIIA2020': 'LLIA',
   'LSP2020': 'Lone Star Prize',
   'RE2020': 'Racial Equity',
-  'SDA2021': 'Stronger Democracy Award'
+  'SDA2021': 'Stronger Democracy Award',
+  'BaWoP22': 'Build a World of Play',
   }
 
 TOPIC_COLORS = ['#%06X' % randint(0x444444, 0xFFFFFF) for i in range(len(topics.keys()) - 1)]

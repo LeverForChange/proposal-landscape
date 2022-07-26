@@ -6,6 +6,8 @@ More information on: [Dash](https://dash.plotly.com/introduction), [Plotly](http
 
 ## Instructions
 
+Initialize a virtual environment with `python -m venv venv`, and activate it.
+
 Install dependencies: `pip install -r requirements.txt`.
 
 In `app/const.py` change `sferg` in the expression `if 'sferg' in os.path.expanduser('~'):` to a value that will match the username on your local machine. This will ensure that the datasets are loaded from the local file system and not from the S3 bucket.
