@@ -6,4 +6,4 @@ data/
 .DS_Store
 .env
 __secrets__.py
-vevn/
+venv/
