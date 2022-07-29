@@ -80,7 +80,7 @@ These indices might evaluate to something like (made up names):
 ```
 [
   [Health Equity in Chicago, Building a Hospital in Indiana, Advocacy for Children of Cancer Patients],
-  [Fresh Water for Kansas Residents, Cleaning Watersheds in Rural Wyoming],
+  [],
   ...,
   [Investing in Guatemalan Science Education]
 ]
