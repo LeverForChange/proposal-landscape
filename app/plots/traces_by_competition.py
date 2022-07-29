@@ -6,16 +6,19 @@ def create_node_traces_by_competition(**kwargs):
   """ Creates a set of scatter traces, one for each competition """
   traces = []
   node_df = kwargs.get('data', df)
-  competitions = node_df['Competition Domain'].unique()
+  competitions = node_df['Competition Name'].unique()
 
   for comp in competitions:
-    data = node_df[node_df['Competition Domain'] == comp]
+    data = node_df[node_df['Competition Name'] == comp]
 
     node_trace = go.Scatter3d(
-      x=data['nodes_x'], y=data['nodes_y'], z=data['nodes_z'],
+      x=data['nodes_x'],
+      y=data['nodes_y'], 
+      z=data['nodes_z'],
       mode='markers',
       line=kwargs.get('line', dict(color='rgba(0,0,0,0)')),
-      hovertext=data['Project Title'], hoverinfo='text',
+      hovertext=data['Project Title'],
+      hoverinfo='text',
       name=COMPETITION_NAMES[comp],
       marker=dict(
         size=[len(knn_indices[i]) / 4 for i, v in data.iterrows()],

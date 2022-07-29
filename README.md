@@ -35,6 +35,8 @@ These global variables can be imported from anywhere in the app, making the vari
 
 ## Data Specifications
 
+__Important__: When regenerating new files, they must be named exactly as described below. The same holds for files stored in S3, where the web app pulls from. When using the similarity pipeline, ensure to update the `model_tag` argument to `LANDSCAPE_APP` and the `output_file_name` to `Proposal_Similarity_DataFrame.csv`.
+
 ### Proposal Dataframe
 
 Pandas DataFrame of cleaned proposal data stored in `consts.py` as `df` and in `data/` as `lfc-proposals-clean.csv`. 

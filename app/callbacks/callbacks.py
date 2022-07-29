@@ -45,17 +45,29 @@ def update_select_proposal_dropdown(*args):
   input_ = ctx.triggered[0]['prop_id']
 
   def to_label_value(rows):
-    return [{'label': row['Project Title'], 'value': i} for i, row in rows.iterrows()]
+    return [{
+      'label': row['Project Title'], 
+      'value': i
+      } for i, row in rows.iterrows()
+      ]
 
   if 'select-competition' in input_:
-    rows = df[df['Competition Domain'] == args[0]].sort_values('Project Title')
+    rows = df[
+      df['Competition Name'] == args[0]
+      ].sort_values('Project Title')
 
   elif 'select-topic' in input_:
-    rows = df[df['Topic'] == args[1]].sort_values('Project Title')
+    rows = df[
+      df['Topic'] == args[1]
+      ].sort_values('Project Title')
 
   elif 'document-search' in input_:
     tokens = args[2].split(' ')
-    results = [df[df['Document Sanitized'].str.contains(tok, case=False)] for tok in tokens]
+    results = [
+      df[
+        df['Document Sanitized'].str.contains(tok, case=False)
+        ] for tok in tokens
+      ]
     if len(results) == 1:
       rows = results[0]
     else:
@@ -64,11 +76,17 @@ def update_select_proposal_dropdown(*args):
 
   elif 'location-search' in input_:
     tokens = args[3].split(' ')
-    location_cols = list(df.filter(regex='Future Work #[1-5] Location').columns)
+    location_cols = list(
+      df.filter(regex='Future Work #[1-5] Location').columns
+      )
     results = []
     for col in location_cols:
       for tok in tokens:
-        results.append(df[df[col].str.contains(tok, case=False, na=False)])
+        results.append(
+          df[
+            df[col].str.contains(tok, case=False, na=False)
+            ]
+          )
     if len(results) == 1:
       rows = results[0]
     else:
@@ -78,7 +96,14 @@ def update_select_proposal_dropdown(*args):
   options = to_label_value(rows)
   return options, False
 
-def update_graph(project_title, click_data, view_type, outlier_threshold, view_type_state, camera_data):
+def update_graph(
+  project_title, 
+  click_data,
+  view_type,
+  outlier_threshold,
+  view_type_state,
+  camera_data
+  ):
   """ 
   Redraws the main graph 
   """
@@ -90,17 +115,35 @@ def update_graph(project_title, click_data, view_type, outlier_threshold, view_t
   input_ = ctx.triggered[0]['prop_id']
 
   if 'select-proposal' in input_ and project_title:
-    fig = createLandscape(selected_proposal=project_title, eye=eye, view_type=view_type_state, outlier_threshold=outlier_threshold)
+    fig = createLandscape(
+      selected_proposal=project_title,
+      eye=eye,
+      view_type=view_type_state,
+      outlier_threshold=outlier_threshold
+      )
 
   elif 'clickData' in input_ and click_data:
     index = click_data['points'][0]['customdata']
-    fig = createLandscape(selected_proposal=index, eye=eye, view_type=view_type_state, outlier_threshold=outlier_threshold)
+    fig = createLandscape(
+      selected_proposal=index,
+      eye=eye,
+      view_type=view_type_state,
+      outlier_threshold=outlier_threshold
+      )
 
   elif 'graph-view-select' in input_ and view_type:
-    fig = createLandscape(eye=eye, view_type=view_type, outlier_threshold=outlier_threshold)
+    fig = createLandscape(
+      eye=eye, 
+      view_type=view_type, 
+      outlier_threshold=outlier_threshold
+      )
 
   elif 'outlier-threshold' in input_ and view_type:
-    fig = createLandscape(eye=eye, view_type=view_type_state, outlier_threshold=outlier_threshold)
+    fig = createLandscape(
+      eye=eye,
+      view_type=view_type_state,
+      outlier_threshold=outlier_threshold
+      )
 
   else:
     fig = createLandscape(eye=eye)
@@ -146,16 +189,29 @@ def download_dataframe(*args):
   index = args[1]
   neighbors = knn_indices[index]
   indices = [index] + neighbors
-  cols = ['Project Title', 'Organization Name', 'Competition Domain', 'Document Sanitized', 'GlobalView MediaWiki Title']
+  cols = [
+    'Project Title',
+    'Organization Name',
+    'Competition Name',
+    'Document Sanitized',
+    'GlobalView MediaWiki Title'
+    ]
 
   download_df = df.iloc[indices, :]
   download_df = download_df[cols]
 
-  download_df['URL'] = download_df['GlobalView MediaWiki Title'].apply(lambda x: f"https://torque.leverforchange.org/GlobalView/index.php/{x}")
+  download_df['URL'] = download_df['GlobalView MediaWiki Title'].apply(
+    lambda x: f"https://torque.leverforchange.org/GlobalView/index.php/{x}"
+    )
   download_df.rename({'Document Sanitized': 'Executive Summary'}, inplace=True)
   download_df.drop(columns=['GlobalView MediaWiki Title'], inplace=True)
 
-  return dcc.send_data_frame(download_df.to_excel, 'LFC Landscape.xlsx', sheet_name='Main', index=False)
+  return dcc.send_data_frame(
+    download_df.to_excel,
+    'LFC Landscape.xlsx',
+    sheet_name='Main',
+    index=False
+    )
 
 def show_download_button(index):
   if index:

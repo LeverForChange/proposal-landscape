@@ -1,4 +1,3 @@
-from urllib.parse import quote_plus
 from dash import html, dcc
 
 from ..const import topics, COMPETITION_NAMES
@@ -17,7 +16,7 @@ def source_card(source):
     html.A([
       html.H2(source['Project Title']),
       html.P(['Organization: ', html.B(source.get('Organization Name'))]),
-      html.P(['Competition: ', html.B(COMPETITION_NAMES[source.get('Competition Domain')])]),
+      html.P(['Competition: ', html.B(COMPETITION_NAMES[source.get('Competition Name')])]),
       html.P(['Topic: ', html.B(resolve_topic(source.get('Topic')))]),
       dcc.Markdown(source['Document Sanitized']),
       ],
@@ -33,7 +32,7 @@ def neighbor_card(source):
     html.A([
       html.H3(source['Project Title']),
       html.P(['Organization: ', html.B(source.get('Organization Name'))]),
-      html.P(['Competition: ', html.B(COMPETITION_NAMES[source.get('Competition Domain')])]),
+      html.P(['Competition: ', html.B(COMPETITION_NAMES[source.get('Competition Name')])]),
       html.P(['Topic: ', html.B(resolve_topic(source.get('Topic')))]),
       dcc.Markdown(source['Document Sanitized']),
       ],
