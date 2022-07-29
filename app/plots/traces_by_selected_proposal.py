@@ -9,16 +9,22 @@ def create_edge_trace(source, indices):
   """ Creates the links between a selected proposal and its neighbors """
   edges_x, edges_y, edges_z = [], [], []
   source = source.to_dict(orient='list')
-  x0, y0, z0 = source['nodes_x'][0], source['nodes_y'][0], source['nodes_z'][0]
+  x0 = source['nodes_x'][0]
+  y0 = source['nodes_y'][0]
+  z0 = source['nodes_z'][0]
 
   for target in indices[1:]:
-    x1, y1, z1 = embeddings[target][0], embeddings[target][1], embeddings[target][2]
+    x1 = embeddings[target][0]
+    y1 = embeddings[target][1]
+    z1 = embeddings[target][2]
     edges_x += [x0, x1, None]
     edges_y += [y0, y1, None]
     edges_z += [z0, z1, None]
 
   edge_trace = go.Scatter3d(
-    x=edges_x, y=edges_y, z=edges_z,
+    x=edges_x,
+    y=edges_y,
+    z=edges_z,
     hoverinfo='none',
     name='links',
     mode='lines',
@@ -52,7 +58,9 @@ def create_selected_proposal_traces(selected_proposal, by='competition'):
   line = dict(width=15, color='white')
 
   source_trace = go.Scatter3d(
-    x=source['nodes_x'], y=source['nodes_y'], z=source['nodes_z'],
+    x=source['nodes_x'], 
+    y=source['nodes_y'], 
+    z=source['nodes_z'],
     mode='markers',
     hovertext=source['Project Title'],
     hoverinfo='text',
@@ -67,15 +75,30 @@ def create_selected_proposal_traces(selected_proposal, by='competition'):
   neighbors = df.iloc[knn_indices[index]].iloc[1:]
   if by == 'Competitions':
     traces.extend(
-      create_node_traces_by_competition(data=neighbors, opacity=0.9, line=line, showlegend=False)
+      create_node_traces_by_competition(
+        data=neighbors,
+        opacity=0.9,
+        line=line,
+        showlegend=False
+        )
       )
   elif by == 'Topics':
     traces.extend(
-      create_node_traces_by_topic(data=neighbors, opacity=0.9, line=line, showlegend=False)
+      create_node_traces_by_topic(
+        data=neighbors,
+        opacity=0.9,
+        line=line,
+        showlegend=False
+        )
       )
   elif by == 'Outliers':
     traces.extend(
-      create_node_traces_by_outlier_score(data=neighbors, opacity=0.9, line=line, showlegend=False)
+      create_node_traces_by_outlier_score(
+        data=neighbors,
+        opacity=0.9,
+        line=line,
+        showlegend=False
+        )
     )
   traces.append(
     create_edge_trace(source, knn_indices[index])

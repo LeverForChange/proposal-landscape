@@ -11,10 +11,13 @@ def create_node_traces_by_topic(**kwargs):
     data = node_df[node_df.Topic == label]
 
     node_trace = go.Scatter3d(
-      x=data['nodes_x'], y=data['nodes_y'], z=data['nodes_z'],
+      x=data['nodes_x'],
+      y=data['nodes_y'],
+      z=data['nodes_z'],
       mode='markers',
       line=kwargs.get('line', dict(color='rgba(0,0,0,0)')),
-      hovertext=data['Project Title'], hoverinfo='text',
+      hovertext=data['Project Title'],
+      hoverinfo='text',
       name=', '.join(topic['words'][:2]) if label >= 0 else 'No Topic',
       marker=dict(
         size=[len(knn_indices[i]) / 4 for i, v in data.iterrows()],
@@ -40,7 +43,9 @@ def create_topic_label_trace():
   text = [', '.join(topic['words'][:2]) for topic in topic_values]
 
   trace = go.Scatter3d(
-    x=x, y=y, z=z,
+    x=x,
+    y=y,
+    z=z,
     mode='text',
     hoverinfo='none',
     text=text,
