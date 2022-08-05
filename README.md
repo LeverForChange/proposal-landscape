@@ -14,7 +14,7 @@ In `app/const.py` change `sferg` in the expression `if 'sferg' in os.path.expand
 
 Start the app: `python index.py`
 
-If you haven't prepared the UMAP model, follow the directions [here](https://github.com/sfergusond/lfc-model-pipeline#readme).
+If you haven't prepared the UMAP model, follow the directions [here](https://github.com/sfergusond/lfc-model-pipeline#readme). Note that by default, the app expects a PREFIX of `LANDSCAPE_APP_`. You should change this in `const.py` or ensure your UMAP output is configured to use that as the prefix. Also note that the CSV filename defaults to `Proposal_Similarity_DataFrame.csv`. Ensure that your `output_file_name` parameter is set to that for the pipeline.
 
 View the app at `localhost:8050`
 
